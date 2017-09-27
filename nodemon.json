@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "debug": true,
+  "exec": "npm run build:dev && babel-node dist/server.js",
+  "watch": ["src"],
+  "ext": "js"
+}

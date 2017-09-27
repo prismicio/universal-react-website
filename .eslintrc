@@ -1,0 +1,18 @@
+{
+  //"extends": "airbnb",
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prop-types": "off",
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+        "experimentalObjectRestSpread": true,
+        "experimentalDecorators": true,
+        "jsx": true
+    },
+    "sourceType": "module"
+  }
+}

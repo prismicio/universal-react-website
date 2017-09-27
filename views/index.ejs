@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prismic Universal App</title>
+  </head>
+  <body>
+    <div id="main"><%- markup -%></div>
+    <script>
+      window.__PRISMIC__ = <%- JSON.stringify(PRISMIC_UNIVERSAL_DATA) -%>;
+    </script>
+    <script src="/client.js"></script>
+  </body>
+</html>
