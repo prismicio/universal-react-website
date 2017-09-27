@@ -1,6 +1,6 @@
 import React from 'react';
 
-function UniversalComponent(fnFetchData, WrappedComponent) {
+function UniversalComponent({request: fnFetchData, component: WrappedComponent}) {
   if (!fnFetchData) throw new Error('Missing prismic query in Fetch Decorator <--> Prismic React');
 
   return class extends React.Component {

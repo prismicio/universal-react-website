@@ -33,6 +33,7 @@ class Page extends React.Component {
   }
 }
 
-export default PrismicReact.UniversalComponent((ctx, props) => {
-  return ctx.api.getByUID('page', props.match.params.uid, {})
-}, Page);
+export default PrismicReact.UniversalComponent({
+  request: (ctx, props) => ctx.api.getByUID('page', props.match.params.uid, {}),
+  component: Page
+});
