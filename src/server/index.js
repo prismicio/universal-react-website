@@ -41,40 +41,36 @@ app.use((req, res, next) => {
 
 // universal routing and rendering
 app.get('*', (req, res, next) => {
-  let status = 200;
-  const data = {};
-
   routes(res.locals.ctx).some(route => {
     // use `matchPath` here
     const match = matchPath(req.url, route);
-    if (match) {
-      const fnFetchData = (route.component.PRISMIC_FETCH_REQUEST && route.component.PRISMIC_FETCH_REQUEST()) || (() => Promise.resolve());
-
-      fnFetchData(res.locals.ctx, /*props*/{match})
-      .then((PRISMIC_UNIVERSAL_DATA) => {
-        const context = {};
-        const markup = renderToString(
-          <Router location={req.url} context={context}>
-            <App primicCtx={res.locals.ctx} PRISMIC_UNIVERSAL_DATA={PRISMIC_UNIVERSAL_DATA} />
-          </Router>
-        );
-      
-        // context.url will contain the URL to redirect to if a <Redirect> was used
-        if (context.url) {
-          return res.redirect(302, context.url);
-        }
-      
-        if (context.is404) {
-          status = 404;
-        }
-
-        return res.status(status).render('index', { markup, PRISMIC_UNIVERSAL_DATA });
-      })
-      .catch((e) => next());
-    }
+    if (match) makeAsyncRender(req, res, next, route, match);
     return match;
   });
 });
+
+//exec async render for matching route
+function makeAsyncRender(req, res, next, route, match) {
+  const fetchAsyncData = (route.component.PRISMIC_FETCH_REQUEST && route.component.PRISMIC_FETCH_REQUEST()) || (() => Promise.resolve());
+  fetchAsyncData(res.locals.ctx, /*props*/{match})
+  .then((PRISMIC_UNIVERSAL_DATA) => {
+    const context = {};
+    const markup = renderToString(
+      <Router location={req.url} context={context}>
+        <App primicCtx={res.locals.ctx} PRISMIC_UNIVERSAL_DATA={PRISMIC_UNIVERSAL_DATA} />
+      </Router>
+    );
+
+    // context.url will contain the URL to redirect to if a <Redirect> was used
+    if (context.url) {
+      return res.redirect(302, context.url);
+    }
+    
+    const status = context.is404 ? 404 : 200;
+    return res.status(status).render('index', { markup, PRISMIC_UNIVERSAL_DATA });
+  })
+  .catch((e) => next(e.message));
+}
 
 // start the server
 const port = process.env.PORT || 3000;

@@ -9,7 +9,6 @@ export default (({prismicCtx, PRISMIC_UNIVERSAL_DATA}) => {
       {routes(prismicCtx, PRISMIC_UNIVERSAL_DATA).map((route, index) => {
         const copyRoute = Object.assign({}, route);
         if(copyRoute.render) delete copyRoute.component;
-
         return <Route key={`route-${index}`} {...copyRoute}/>;
       })}
     </Switch>
