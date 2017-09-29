@@ -17,8 +17,12 @@ function UniversalComponent({request: fnFetchData, component: WrappedComponent})
       return fnFetchData;
     }
 
+    isValidObject(obj) {
+      return obj && obj.constructor === Object && Object.keys(obj).length > 0;
+    }
+
     componentWillMount() {
-      this.props.PRISMIC_UNIVERSAL_DATA ? Promise.resolve(this.props.PRISMIC_UNIVERSAL_DATA) : fnFetchData(this.props.prismicCtx, this.props)
+      this.isValidObject(this.props.PRISMIC_UNIVERSAL_DATA) ? Promise.resolve(this.props.PRISMIC_UNIVERSAL_DATA) : fnFetchData(this.props.prismicCtx, this.props)
       .then((PRISMIC_UNIVERSAL_DATA) => {
         this.setState({PRISMIC_UNIVERSAL_DATA});
       })
