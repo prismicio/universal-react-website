@@ -43,3 +43,4 @@ src/server-es5.js
 .DS_Store
 /dist/client.js
 /dist/server.js
+_development
