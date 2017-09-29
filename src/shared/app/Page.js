@@ -49,6 +49,8 @@ class Page extends React.Component {
       return <div className="container">{ pageContent }</div>;
     } else if (this.state.notFound) {
       return <NotFoundPage />;
+    } else {
+      return <div>Loading</div>;
     }
   }
 }

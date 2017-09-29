@@ -65,6 +65,8 @@ class HomePage extends React.Component {
       );
     } else if (this.state.notFound) {
       return <NotFoundPage />;
+    } else {
+      return <div>Loading...</div>;
     }
   }
 }

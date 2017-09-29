@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import routes from './routes';
 
-export default (({prismicCtx, PRISMIC_UNIVERSAL_DATA}) => {
+export default (({prismicCtx, PRISMIC_UNIVERSAL_DATA, path}) => {
   return (
     <Switch>
       {routes(prismicCtx, PRISMIC_UNIVERSAL_DATA).map((route, index) => {

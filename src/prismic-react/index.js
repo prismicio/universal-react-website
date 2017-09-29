@@ -7,9 +7,8 @@ function UniversalComponent({request: fnFetchData, component: WrappedComponent})
 
     constructor(props) {
       super(props);
-
       this.state = {
-        PRISMIC_UNIVERSAL_DATA: null
+        SCOPED_DATA: props.PRISMIC_UNIVERSAL_DATA[props.match.url]
       };
     }
     
@@ -17,30 +16,29 @@ function UniversalComponent({request: fnFetchData, component: WrappedComponent})
       return fnFetchData;
     }
 
-    isValidObject(obj) {
-      return obj && obj.constructor === Object && Object.keys(obj).length > 0;
-    }
-
     componentWillMount() {
-      this.isValidObject(this.props.PRISMIC_UNIVERSAL_DATA) ? Promise.resolve(this.props.PRISMIC_UNIVERSAL_DATA) : fnFetchData(this.props.prismicCtx, this.props)
-      .then((PRISMIC_UNIVERSAL_DATA) => {
-        this.setState({PRISMIC_UNIVERSAL_DATA});
+      this.state.SCOPED_DATA ? Promise.resolve(this.state.SCOPED_DATA) : fnFetchData(this.props.prismicCtx, this.props)
+      .then((SCOPED_DATA) => {
+        this.setState({SCOPED_DATA});
       })
       .catch((e) => console.log(e.message));
     }
 
     componentWillReceiveProps(props) {
       fnFetchData(props.prismicCtx, props)
-      .then((PRISMIC_UNIVERSAL_DATA) => {
-        this.setState({PRISMIC_UNIVERSAL_DATA});
+      .then((SCOPED_DATA) => {
+        this.setState({SCOPED_DATA});
       })
       .catch((e) => console.log(e.message));
     }
 
     render() {
-      
-      const refreshedState = this.state.PRISMIC_UNIVERSAL_DATA ? {PRISMIC_UNIVERSAL_DATA: this.state.PRISMIC_UNIVERSAL_DATA} : {};
-      const newProps = Object.assign({}, this.props, refreshedState);
+      const newProps = (() => {
+        const copy = Object.assign({}, this.props);
+        if(this.state.SCOPED_DATA) copy.PRISMIC_UNIVERSAL_DATA = this.state.SCOPED_DATA;
+        else delete copy.PRISMIC_UNIVERSAL_DATA;
+        return copy;
+      })();
       return <WrappedComponent {...newProps}/>
     }
   }
