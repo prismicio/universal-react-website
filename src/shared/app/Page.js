@@ -1,5 +1,5 @@
 import React from 'react';
-import NotFound from './NotFoundPage';
+import NotFoundPage from './NotFoundPage';
 
 import PrismicReact from '../../prismic-react';
 import TextSection from './pageComponents/TextSection';
@@ -46,14 +46,7 @@ class Page extends React.Component {
         }
       });
       
-      return (
-        <div>
-          { pageContent }
-          <pre>
-          {JSON.stringify(document, null, 2)}
-          </pre>
-        </div>
-      );
+      return <div className="container">{ pageContent }</div>;
     } else if (this.state.notFound) {
       return <NotFoundPage />;
     }

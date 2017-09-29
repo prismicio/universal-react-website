@@ -1,5 +1,5 @@
 import React from 'react';
-import NotFound from './NotFoundPage';
+import NotFoundPage from './NotFoundPage';
 
 import PrismicReact from '../../prismic-react';
 import TextSection from './pageComponents/TextSection';
@@ -18,6 +18,14 @@ class HomePage extends React.Component {
       notFound: false,
       linkResolver : null,
     };
+  }
+  
+  componentWillMount() {
+    if (typeof document !== 'undefined') document.body.classList.add('homepage');
+  }
+  
+  componentWillUnmount() {
+    if (typeof document !== 'undefined') document.body.classList.remove('homepage');
   }
 
   render() {
@@ -50,10 +58,9 @@ class HomePage extends React.Component {
       return (
         <div>
           <HomeBanner document={document}/>
-          { pageContent }
-          <pre>
-          {JSON.stringify(document, null, 2)}
-          </pre>
+          <div className="container">
+            { pageContent }
+          </div>
         </div>
       );
     } else if (this.state.notFound) {

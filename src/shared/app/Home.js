@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default ((props) => {
-  return <div>This is my homepage</div>;
+  return <div className="container">This is my homepage</div>;
 });
