@@ -53,7 +53,7 @@ app.get('*', (req, res, next) => {
 function makeAsyncRender(req, res, next, route, match) {
   const fetchAsyncData = (route.component.PRISMIC_FETCH_REQUEST && route.component.PRISMIC_FETCH_REQUEST()) || (() => Promise.resolve());
   fetchAsyncData(res.locals.ctx, /*props*/{match})
-  .then((PRISMIC_UNIVERSAL_DATA) => {
+  .then((PRISMIC_UNIVERSAL_DATA = {}) => {
     const context = {};
     const markup = renderToString(
       <Router location={req.url} context={context}>
