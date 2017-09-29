@@ -1,0 +1,37 @@
+extends ./layout.pug
+
+block prepend body
+  body.homepage(data-wio-id=pageContent.id)
+    
+    include ./partials/header.pug
+    
+    // Homepage Banner Section
+    - var banner = pageContent.data.homepage_banner[0]
+    section.homepage-banner(style='background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(' + banner.image.url + ')')
+      .banner-content.container
+        h2.banner-title
+          != PrismicDOM.RichText.asText(banner.title)
+        p.banner-description
+          != PrismicDOM.RichText.asText(banner.tagline)
+        - var buttonLink = PrismicDOM.Link.url(banner.button_link, ctx.linkResolver)
+        - var buttonLabel = PrismicDOM.RichText.asText(banner.button_label)
+        if ( buttonLink && buttonLabel != " " )
+          a.banner-button(href=buttonLink) !{buttonLabel}
+    
+    // Content Section
+    div.container
+        
+      //- Display the slices
+      for slice in pageContent.data.page_content
+        case slice.slice_type
+          when 'text_section'
+            include ./partials/text-section.pug
+          when 'quote'
+            include ./partials/quote.pug
+          when 'full_width_image'
+            include ./partials/full-width-image.pug
+          when 'image_gallery'
+            include ./partials/image-gallery.pug
+          when 'image_highlight'
+            include ./partials/image-highlight.pug
+

@@ -1,0 +1,14 @@
+section.highlight.content-section
+  .highlight-left
+    != PrismicDOM.RichText.asHtml(slice.primary.title, ctx.linkResolver)
+    != PrismicDOM.RichText.asHtml(slice.primary.headline, ctx.linkResolver)
+
+    - var highlightLink = PrismicDOM.Link.url(slice.primary.link, ctx.linkResolver)
+    - var linkLabel = PrismicDOM.RichText.asText(slice.primary.link_label)
+    if ( highlightLink && linkLabel != " " )
+      p
+        a(href=PrismicDOM.Link.url(slice.primary.link, ctx.linkResolver))
+          != PrismicDOM.RichText.asText(slice.primary.link_label)
+
+  .highlight-right
+    img(src=slice.primary.featured_image.url)

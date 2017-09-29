@@ -1,0 +1,22 @@
+doctype html(lang='en')
+
+head
+  title Sample Website
+  link(rel="stylesheet", href="/stylesheets/reset.css")
+  link(rel='stylesheet', href='/stylesheets/common.css')
+  link(rel="stylesheet", href="/stylesheets/style.css")
+  link(href='https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic', rel='stylesheet', type='text/css')
+  link(href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic', rel='stylesheet', type='text/css')
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel='stylesheet')
+  meta(name="viewport", content="width=device-width, initial-scale=1")
+
+  // Required for Previews and Experiments
+  script(src="//code.jquery.com/jquery-2.1.1.min.js")
+  script
+    = ctx?"window.prismic = { endpoint: '" + ctx.endpoint + "' };":""
+  script(src="//static.cdn.prismic.io/prismic.min.js")
+
+body
+  block body
+    
+  include ./partials/footer.pug
