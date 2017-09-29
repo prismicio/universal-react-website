@@ -7,8 +7,9 @@ import FullWidthImage from './pageComponents/FullWidthImage';
 import Quote from './pageComponents/Quote';
 import ImageGallery from './pageComponents/ImageGallery';
 import ImageHighlight from './pageComponents/ImageHighlight';
+import HomeBanner from './pageComponents/HomeBanner';
 
-class Page extends React.Component {
+class HomePage extends React.Component {
   
   constructor(props) {
     super(props);
@@ -48,6 +49,7 @@ class Page extends React.Component {
       
       return (
         <div>
+          <HomeBanner document={document}/>
           { pageContent }
           <pre>
           {JSON.stringify(document, null, 2)}
@@ -61,6 +63,6 @@ class Page extends React.Component {
 }
 
 export default PrismicReact.UniversalComponent({
-  request: (ctx, props) => ctx.api.getByUID('page', props.match.params.uid, {}),
-  component: Page
+  request: (ctx, props) => ctx.api.getSingle('homepage', {}),
+  component: HomePage
 });
