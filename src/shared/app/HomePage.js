@@ -28,6 +28,10 @@ class HomePage extends React.Component {
     if (typeof document !== 'undefined') document.body.classList.remove('homepage');
   }
 
+  componentDidMount() {
+    this.props.prismicCtx.refreshToolbar();
+  }
+
   render() {
     if (this.props.PRISMIC_UNIVERSAL_DATA) {
       const document = this.props.PRISMIC_UNIVERSAL_DATA;
@@ -56,7 +60,7 @@ class HomePage extends React.Component {
       });
       
       return (
-        <div>
+        <div data-wio-id={document.id}>
           <HomeBanner document={document}/>
           <div className="container">
             { pageContent }

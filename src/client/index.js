@@ -4,6 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
+import PrismicToolbar from 'prismic-toolbar';
 
 import App from '../shared/app/App';
 import PrismicConfig from '../prismic-configuration';
@@ -13,6 +14,14 @@ const AppClient = (props) => (
     <App {...props} />
   </Router>
 );
+  
+function refreshToolbar(api) {
+  const maybeCurrentExperiment = api.currentExperiment();
+  if (maybeCurrentExperiment) {
+    PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+  }
+  PrismicToolbar.setup(PrismicConfig.apiEndpoint);
+}
 
 function buildPrismicContext(callback = () => {}) {
   return Prismic.api(PrismicConfig.apiEndpoint, {
@@ -21,7 +30,10 @@ function buildPrismicContext(callback = () => {}) {
     const prismicCtx = {
       endpoint: PrismicConfig.apiEndpoint,
       linkResolver: PrismicConfig.linkResolver,
-      api
+      api,
+      refreshToolbar() {
+        return refreshToolbar(api);
+      }
     };
     return prismicCtx;
   }).catch((error) => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import NotFoundPage from './NotFoundPage';
-
 import PrismicReact from '../../prismic-react';
 import TextSection from './pageComponents/TextSection';
 import FullWidthImage from './pageComponents/FullWidthImage';
@@ -17,6 +16,14 @@ class Page extends React.Component {
       notFound: false,
       linkResolver : null,
     };
+  }
+
+  componentDidUpdate() {
+    this.props.prismicCtx.refreshToolbar();
+  }
+
+  componentDidMount() {
+    this.props.prismicCtx.refreshToolbar();
   }
 
   render() {
@@ -46,7 +53,11 @@ class Page extends React.Component {
         }
       });
       
-      return <div className="container">{ pageContent }</div>;
+      return(
+        <div className="container" data-wio-id={document.id}>
+          { pageContent }
+        </div>
+      );
     } else if (this.state.notFound) {
       return <NotFoundPage />;
     } else {
