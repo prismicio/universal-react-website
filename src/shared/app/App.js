@@ -1,15 +1,11 @@
 import React from 'react';
-
 import router from '../router';
 import Layout from './Layout';
-import Page from './Page';
-import { NotFoundPage } from './NotFoundPage';
 
 export const App = (props) => {
-  //could put a wrapper here for layout or anything else
-  
+  const menu = props.PRISMIC_UNIVERSAL_DATA.menu;
   return (
-    <Layout>
+    <Layout menu={menu}>
       {router(props)}
     </Layout>
   );

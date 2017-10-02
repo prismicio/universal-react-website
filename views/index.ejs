@@ -10,6 +10,17 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script>
+      <%- ctx ? "window.prismic = { endpoint: '" + ctx.endpoint + "' };" : "" -%>
+      <% var maybeCurrentExperiment = ctx.api.currentExperiment(); %>
+      <% if (maybeCurrentExperiment) { %>
+        <% var googleId = maybeCurrentExperiment.googleId() %>
+        window.googleId = "<%- googleId -%>";
+      <% } %>
+    </script>
+    <script src=<%- "//www.google-analytics.com/cx/api.js?experiment=" + googleId -%>></script>
+    <script src="//static.cdn.prismic.io/prismic.min.js"></script>
+    <script>prismic.startExperiment(window.googleId, cxApi);</script>
   </head>
   <body>
     <div id="main"><%- markup -%></div>

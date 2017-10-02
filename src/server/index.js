@@ -6,6 +6,7 @@ import React from 'react';
 import Prismic from 'prismic-javascript';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router, matchPath } from 'react-router-dom';
+import Cookies from 'cookies';
 
 import App from '../shared/app/App';
 import routes from '../shared/routes.js';
@@ -27,7 +28,6 @@ app.use((req, res, next) => {
     endpoint: PrismicConfig.apiEndpoint,
     linkResolver: PrismicConfig.linkResolver,
   };
-  // add PrismicDOM in locals to access them in templates.
   Prismic.api(PrismicConfig.apiEndpoint, {
     accessToken: PrismicConfig.accessToken,
     req,
@@ -39,22 +39,42 @@ app.use((req, res, next) => {
   });
 });
 
+// Preconfigured prismic preview
+app.get('/preview', (req, res) => {
+  const token = req.query.token;
+  if (token) {
+    res.locals.ctx.api.previewSession(token, PrismicConfig.linkResolver, '/')
+    .then((url) => {
+      const cookies = new Cookies(req, res);
+      cookies.set(Prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
+      res.redirect(302, url);
+    }).catch((err) => {
+      res.status(500).send(`Error 500 in preview: ${err.message}`);
+    });
+  } else {
+    res.send(400, 'Missing token from querystring');
+  }
+});
+
 // universal routing and rendering
 app.get('*', (req, res, next) => {
-  routes(res.locals.ctx).some(route => {
-    // use `matchPath` here
-    const match = matchPath(req.url, route);
-    if (match) makeAsyncRender(req, res, next, route, match);
-    return match;
+  res.locals.ctx.api.getSingle('menu')
+  .then(function(menu){
+    routes(res.locals.ctx).some(route => {
+      // use `matchPath` here
+      const match = matchPath(req.url, route);
+      if (match) makeAsyncRender(req, res, next, route, match, menu);
+      return match;
+    });
   });
 });
 
 //exec async render for matching route
-function makeAsyncRender(req, res, next, route, match) {
+function makeAsyncRender(req, res, next, route, match, menu) {
   const fetchAsyncData = (route.component.PRISMIC_FETCH_REQUEST && route.component.PRISMIC_FETCH_REQUEST()) || (() => Promise.resolve());
   fetchAsyncData(res.locals.ctx, /*props*/{match})
   .then((data = {}) => {
-    const PRISMIC_UNIVERSAL_DATA = {[req.url]: data};
+    const PRISMIC_UNIVERSAL_DATA = {[req.url]: data, menu: menu};
     const context = {};
     const markup = renderToString(
       <Router location={req.url} context={context}>
