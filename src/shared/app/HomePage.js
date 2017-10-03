@@ -28,10 +28,6 @@ class HomePage extends React.Component {
     if (typeof document !== 'undefined') document.body.classList.remove('homepage');
   }
 
-  componentDidMount() {
-    this.props.prismicCtx.refreshToolbar();
-  }
-
   render() {
     if (this.props.PRISMIC_UNIVERSAL_DATA) {
       const document = this.props.PRISMIC_UNIVERSAL_DATA;

@@ -6,7 +6,7 @@ const client = {
     js: './src/client/index.js',
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public/js/compiled'),
     filename: 'client.js',
   },
   module: {
@@ -35,7 +35,7 @@ const server = {
     js: './src/server/index.js',
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public/js/compiled'),
     filename: 'server.js',
     libraryTarget: 'commonjs2',
   },

@@ -18,14 +18,6 @@ class Page extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    this.props.prismicCtx.refreshToolbar();
-  }
-
-  componentDidMount() {
-    this.props.prismicCtx.refreshToolbar();
-  }
-
   render() {
     if (this.props.PRISMIC_UNIVERSAL_DATA) {
       const document = this.props.PRISMIC_UNIVERSAL_DATA;

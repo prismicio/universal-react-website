@@ -2,12 +2,12 @@
   "name": "prismic-universal-app",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "public/js/compiled/server.js",
   "scripts": {
     "test:lint": "eslint src/",
     "test": "npm run test:lint",
-    "start": "npm run build && node dist/server.js",
-    "start:dev": "export NODE_ENV=development && nodemon dist/server.js",
+    "start": "npm run build && node public/js/compiled/server.js",
+    "start:dev": "export NODE_ENV=development && nodemon public/js/compiled/server.js",
     "build": "NODE_ENV=production webpack -p --profile --display-modules --optimize-minimize",
     "build:dev": "webpack -d",
     "build:dev:watch": "webpack -d --watch"

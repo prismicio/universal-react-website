@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "debug": true,
-  "exec": "npm run build:dev && babel-node dist/server.js",
+  "exec": "npm run build:dev && babel-node public/js/compiled/server.js",
   "watch": ["src"],
   "ext": "js"
 }

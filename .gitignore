@@ -41,6 +41,5 @@ src/server-es5.js
 /package-lock.json
 
 .DS_Store
-dist/client.js
-dist/server.js
+public/js/compiled/
 _development

@@ -1,12 +1,18 @@
 import React from 'react';
+import PrismicToolbar from 'prismic-toolbar';
 
 function UniversalComponent({request: fnFetchData, component: WrappedComponent}) {
-  if (!fnFetchData) throw new Error('Missing prismic query in Fetch Decorator <--> Prismic React');
-
+  if(!fnFetchData || !fnFetchData.request instanceof Promise) throw new Exception("[Prismic UniversalComponent] Missing parameter 'request' - must be an async call returning a Promise.");
+  if(!WrappedComponent) throw new Exception("[Prismic UniversalComponent] Missing parameter 'component' - must be a valid React Component");
+  
   return class extends React.Component {
 
     constructor(props) {
       super(props);
+      if(!props.PRISMIC_UNIVERSAL_DATA) throw new Exception(`[Prismic - Component '${WrappedComponent.name}'] You must provide a props 'PRISMIC_UNIVERSAL_DATA'.`);
+      if(!props.prismicCtx) throw new Exception(`[Prismic - Component '${WrappedComponent.name}'] You must provide a props 'prismicCtx' which contains at least the object 'api' and the api endpoint.`);
+      if(!props.prismicCtx.api) throw new Exception(`[Prismic - Component '${WrappedComponent.name}'] You must provide a props 'prismicCtx' which contains at least the object 'api' and the api endpoint.`);
+      if(!props.prismicCtx.endpoint) throw new Exception(`[Prismic - Component '${WrappedComponent.name}'] You must provide a props 'prismicCtx' which contains at least the object 'api' and the api endpoint.`);
       this.state = {
         SCOPED_DATA: props.PRISMIC_UNIVERSAL_DATA[props.match.url]
       };
@@ -30,6 +36,18 @@ function UniversalComponent({request: fnFetchData, component: WrappedComponent})
         this.setState({SCOPED_DATA});
       })
       .catch((e) => console.log(e.message));
+    }
+
+    componentDidUpdate() {
+      this.refreshToolbar(this.props.prismicCtx.api);
+    }
+
+    refreshToolbar(api) {
+      const maybeCurrentExperiment = api.currentExperiment();
+      if (maybeCurrentExperiment) {
+        PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+      }
+      PrismicToolbar.setup(this.props.prismicCtx.endpoint);
     }
 
     render() {

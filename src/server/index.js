@@ -17,10 +17,10 @@ const server = new Server(app);
 
 // use ejs templates
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, '../../../views'));
 
 // define the folder that will be used for static assets
-app.use(Express.static(path.join(__dirname, '../dist')));
+app.use(Express.static(path.join(__dirname, '../../../public')));
 
 // Middleware to inject prismic context
 app.use((req, res, next) => {
