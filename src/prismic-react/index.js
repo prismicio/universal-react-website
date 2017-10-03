@@ -38,6 +38,10 @@ function UniversalComponent({request: fnFetchData, component: WrappedComponent})
       .catch((e) => console.log(e.message));
     }
 
+    componentDidMount() {
+      this.refreshToolbar(this.props.prismicCtx.api);
+    }
+
     componentDidUpdate() {
       this.refreshToolbar(this.props.prismicCtx.api);
     }
