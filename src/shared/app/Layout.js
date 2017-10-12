@@ -1,3 +1,8 @@
+/**
+ * The menu content that is rendered here is queried on
+ * the server-side in src/server/index.js.
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Link as PrismicLink, RichText } from 'prismic-reactjs';

@@ -1,3 +1,21 @@
+/**
+ * This file is the starting point of the application when
+ * running on the client side. It builds the prismic context
+ * and passes it to the App component via the props.
+ * 
+ * Here is where you can find all the important files for 
+ * this application:
+ * 
+ * Components: All the components for this application are 
+ * located in the src/shared/app folder
+ *
+ * Prismic Configuration: The configuration for the prismic 
+ * repository is found in src/prismic-configuration.js
+ * 
+ * Router: The router is located in src/shared/router.js 
+ * and src/shared/routes.js
+ */
+
 /* global window document */
 
 import React from 'react';

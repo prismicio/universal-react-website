@@ -1,3 +1,23 @@
+/**
+ * This file is the code that will run when loading a page 
+ * on the server side.
+ * 
+ * Here is where you can find all the important files for 
+ * this application:
+ * 
+ * Components: All the components for this application are 
+ * located in the src/shared/app folder
+ *
+ * Prismic Configuration: The configuration for the prismic 
+ * repository is found in src/prismic-configuration.js
+ * 
+ * Router: The router is located in src/shared/router.js 
+ * and src/shared/routes.js
+ * 
+ * Server-side view: The view that this file renders is 
+ * found in views/index.ejs
+ */
+
 /* eslint no-console: "off" */
 import path from 'path';
 import { Server } from 'http';
@@ -58,6 +78,8 @@ app.get('/preview', (req, res) => {
 
 // universal routing and rendering
 app.get('*', (req, res, next) => {
+  
+  // This project has a static menu, so the menu content is queried here and passed to the render function
   res.locals.ctx.api.getSingle('menu')
   .then(function(menu){
     routes(res.locals.ctx).some(route => {

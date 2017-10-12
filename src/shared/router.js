@@ -1,3 +1,8 @@
+/**
+ * This is the router for the application. You can find 
+ * the list of routes in routes.js.
+ */
+
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
