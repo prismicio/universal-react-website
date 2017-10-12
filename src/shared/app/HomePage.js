@@ -2,12 +2,12 @@ import React from 'react';
 import NotFoundPage from './NotFoundPage';
 
 import PrismicReact from '../../prismic-react';
-import TextSection from './pageComponents/TextSection';
-import FullWidthImage from './pageComponents/FullWidthImage';
-import Quote from './pageComponents/Quote';
-import ImageGallery from './pageComponents/ImageGallery';
-import ImageHighlight from './pageComponents/ImageHighlight';
-import HomeBanner from './pageComponents/HomeBanner';
+import TextSection from './slices/TextSection';
+import FullWidthImage from './slices/FullWidthImage';
+import Quote from './slices/Quote';
+import ImageGallery from './slices/ImageGallery';
+import ImageHighlight from './slices/ImageHighlight';
+import HomeBanner from './slices/HomeBanner';
 
 class HomePage extends React.Component {
   
