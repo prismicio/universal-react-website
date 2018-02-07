@@ -17,7 +17,6 @@
  */
 
 import React from 'react';
-import PrismicToolbar from 'prismic-toolbar';
 
 function UniversalComponent({request: fnFetchData, component: WrappedComponent}) {
   if(!fnFetchData || !fnFetchData.request instanceof Promise) throw new Exception("[Prismic UniversalComponent] Missing parameter 'request' - must be an async call returning a Promise.");
@@ -67,9 +66,9 @@ function UniversalComponent({request: fnFetchData, component: WrappedComponent})
     refreshToolbar(api) {
       const maybeCurrentExperiment = api.currentExperiment();
       if (maybeCurrentExperiment) {
-        PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+        window.PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
       }
-      PrismicToolbar.setup(this.props.prismicCtx.endpoint);
+      window.PrismicToolbar.setup(this.props.prismicCtx.endpoint);
     }
 
     render() {
