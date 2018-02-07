@@ -25,7 +25,6 @@
     "net": "^1.0.2",
     "prismic-javascript": "^1.4.0",
     "prismic-reactjs": "^0.2.0",
-    "prismic-toolbar": "0.0.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router": "^4.2.0",

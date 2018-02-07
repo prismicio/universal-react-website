@@ -18,9 +18,8 @@
         window.googleId = "<%- googleId -%>";
       <% } %>
     </script>
-    <script src=<%- "//www.google-analytics.com/cx/api.js?experiment=" + googleId -%>></script>
     <script src="//static.cdn.prismic.io/prismic.min.js"></script>
-    <script>prismic.startExperiment(window.googleId, cxApi);</script>
+    <script>PrismicToolbar.startExperiment(window.googleId);</script>
   </head>
   <body>
     <div id="main"><%- markup -%></div>
