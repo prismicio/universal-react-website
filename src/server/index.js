@@ -26,7 +26,6 @@ import React from 'react';
 import Prismic from 'prismic-javascript';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router, matchPath } from 'react-router-dom';
-import Cookies from 'cookies';
 
 import App from '../shared/app/App';
 import routes from '../shared/routes.js';
@@ -65,8 +64,6 @@ app.get('/preview', (req, res) => {
   if (token) {
     res.locals.ctx.api.previewSession(token, PrismicConfig.linkResolver, '/')
     .then((url) => {
-      const cookies = new Cookies(req, res);
-      cookies.set(Prismic.previewCookie, token, { maxAge: 30 * 60 * 1000, path: '/', httpOnly: false });
       res.redirect(302, url);
     }).catch((err) => {
       res.status(500).send(`Error 500 in preview: ${err.message}`);
