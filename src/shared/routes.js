@@ -21,6 +21,7 @@ export default (prismicCtx, PRISMIC_UNIVERSAL_DATA) => {
       }
     },
     {
+      path: '/',
       component: NotFoundPage
     }
   ];

@@ -13,15 +13,22 @@ class Page extends React.Component {
     super(props);
     
     this.state = {
-      notFound: false,
+      notFound: 
+        props.PRISMIC_UNIVERSAL_DATA &&
+        !props.PRISMIC_UNIVERSAL_DATA.data ?
+        true :
+        false,
       linkResolver : null,
     };
   }
+  
+  componentWillReceiveProps(props) {
+    this.setState({ notFound: !props.PRISMIC_UNIVERSAL_DATA })
+  }
 
   render() {
-    if (this.props.PRISMIC_UNIVERSAL_DATA) {
-      const document = this.props.PRISMIC_UNIVERSAL_DATA;
-      
+    const document = this.props.PRISMIC_UNIVERSAL_DATA;
+    if (document && document.data) {
       var pageContent = document.data.page_content.map(function(slice, index){
         switch (slice.slice_type) {
           case "text_section":
@@ -53,7 +60,7 @@ class Page extends React.Component {
     } else if (this.state.notFound) {
       return <NotFoundPage />;
     } else {
-      return <div>Loading</div>;
+      return <div className="container">Loading</div>;
     }
   }
 }
