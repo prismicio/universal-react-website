@@ -1,6 +1,6 @@
-# Universal React Website with prismic.io
+# Universal React Website with prismic.io (Depricated)
 
-This is an example Universal React website with content managed from [prismic.io](https://prismic.io) (an API-based CMS).
+This example project is out of date and shouldn't be used as an example anymore. For the most up-to-date resources for Prismic, check out the [Prismic documentation](https://prismic.io/docs).
 
 ## Getting started
 
